@@ -11,6 +11,8 @@ Simply increasing the size of language models does not make them better at align
 
 <img width="774" alt="Screenshot 2024-11-11 at 12 49 29 PM" src="https://github.com/user-attachments/assets/70557873-98e1-466e-a7b8-10e57a7e995f">
 
+## Results
+
 * InstructGPT outputs are consistently preferred over GPT-3, even when the model size is smaller; labelers rate InstructGPT as more reliable and better at following instructions.
 * InstructGPT improves truthfulness significantly, halving hallucination rates compared to GPT-3, and performs better on tasks that require fidelity to the input.
 * The model reduces toxicity in outputs by around 25% compared to GPT-3 but does not significantly improve on bias-related benchmarks.
@@ -37,11 +39,19 @@ Simply increasing the size of language models does not make them better at align
 
 ## Architecture Overview
 
+**Formal Pseudocode**
 
+<img width="557" alt="Screenshot 2024-11-11 at 4 49 02 PM" src="https://github.com/user-attachments/assets/5530b798-902b-4224-a38f-33e6f48b97e8">
 
+In the pseudocode provided, the purpose of the list C is to store the intermediate values required to compute the binomial coefficient  C(n, r)  (also known as “n choose r”) using a dynamic programming approach. The list C is initialized with r + 1 elements, all set to 0, except for C[0], which is set to 1. This initialization allows C to store the values of binomial coefficients up to the rth position as the computation progresses. The code iterates from 1 to n (inclusive) to compute the coefficients. For each i, the inner loop iterates backwards from j = min(i, r) down to 1. At each step, C[j] is updated to be the sum of C[j] and C[j - 1], effectively building the values of the binomial coefficients for n rows of Pascal’s Triangle. The final value, C[r], holds the computed binomial coefficient  C(n, r) .
 
+**Why This Approach?**
 
+The list C serves as a memory-efficient storage to calculate the binomial coefficient iteratively without the need for recursion or computing factorials, which can be computationally intensive. By storing only the required elements of Pascal’s Triangle, this approach avoids recalculating values and minimizes memory usage.
 
+**How It Differs from Previous Models or Approaches?**
+
+Traditional approaches for calculating binomial coefficients might use recursive formulas, factorials, or full Pascal’s Triangle generation. However, this dynamic programming method optimizes both time and space by calculating only the necessary values up to C[r] for a given n, making it efficient for large values of n and r. This is particularly useful in scenarios where repeated calculations of binomial coefficients are needed, as it avoids redundant calculations.
 
 ## Critical Analysis: What was overlooked by the authors?
 * **Limitations**: The authors address only specific alignment goals (helpfulness, honesty, and harmlessness), but broader ethical implications and potential misuse are less explored. The human labelers’ demographic limitations (primarily English-speaking, specific cultural contexts) may bias the model’s behavior.
@@ -53,3 +63,15 @@ Simply increasing the size of language models does not make them better at align
 * **Shaping AI Alignment Research**: This work is pivotal in demonstrating RLHF’s potential for aligning LLMs with human intentions, setting a foundation for safer, more reliable AI applications.
 * **Influence on Subsequent Models**: InstructGPT laid groundwork for models like ChatGPT, showing that RLHF can help models achieve high user satisfaction on open-ended tasks.
 * **Broader AI Landscape**: By providing a feasible approach to align models with ethical guidelines, this work encourages more responsible AI development, impacting sectors like customer service, education, and content moderation.
+
+## Resource Links
+1. Original Paper: Training language models to follow instructions with human feedback (https://arxiv.org/abs/2203.02155)
+2. Related Paper: Imitating Interactive Intelligence (https://arxiv.org/abs/2012.05672)
+3. A General Language Assistant as a Laboratory for Alignment (https://arxiv.org/abs/2112.00861)
+4. Language (Technology) is Power: A Critical Survey of "Bias" in NLP (https://arxiv.org/abs/2005.14050)
+5. Truth, lies, and automation (https://cset.georgetown.edu/wp-content/uploads/CSET-Truth-Lies-and-Automation.pdf)
+
+## Citation
+Ouyang, L., Wu, J., Jiang, X., Almeida, D., Wainwright, C. L., Mishkin, P., Zhang, C., Agarwal, S., Slama, K., Ray, A., Schulman, J., Hilton, J., Kelton, F., Miller, L., Simens, M., Askell, A., Welinder, P., Christiano, P., Leike, J., & Lowe, R. (2022). Training language models to follow instructions with human feedback. arXiv. https://arxiv.org/abs/2203.02155
+
+
